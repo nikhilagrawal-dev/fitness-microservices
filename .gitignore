@@ -1,0 +1,27 @@
+# Maven
+**/target/
+
+# IntelliJ
+**/.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Environment
+.env
+
+# Java
+*.class
+*.pid
+
+# Build
+out/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride

@@ -1,0 +1,32 @@
+package com.fitness.activityservice.controller;
+
+
+import com.fitness.activityservice.dto.ActivityRequest;
+import com.fitness.activityservice.dto.ActivityResponse;
+import com.fitness.activityservice.service.ActivityService;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+// We have this End point through which we post activity to track activity
+// track activity method is called which is in Activity Service
+// where it first validate user in order to not store invalid user which lead to corrupt data
+//
+@RequestMapping("/api/activities")
+
+@AllArgsConstructor
+
+
+public class ActivityController {
+
+    private ActivityService activityService;
+
+    @PostMapping
+    public ResponseEntity<ActivityResponse> trackActivity(@RequestBody ActivityRequest request){
+        return ResponseEntity.ok(activityService.trackActivity(request));
+    }
+}
