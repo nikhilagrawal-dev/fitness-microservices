@@ -1,365 +1,203 @@
-# 🏋️ Fitness Tracking Microservices
+# 🏋️ Fitness Tracker Microservices
 
-An AI-powered Fitness Tracking System built using **Spring Boot Microservices**, **Spring Cloud**, **Keycloak**, **Kafka**, **MongoDB**, **PostgreSQL**, and **Google Gemini AI**.
+A full-stack Fitness Tracker application built using **Spring Boot Microservices**, **React**, **Keycloak OAuth2**, **Kafka**, **PostgreSQL**, and **MongoDB**.
 
-The project demonstrates a production-style microservices architecture with centralized configuration, service discovery, authentication, API gateway, asynchronous communication, and AI-powered fitness recommendations.
-
----
-
-# 🚀 Features
-
-- 🔐 Keycloak Authentication & Authorization
-- 🌐 Spring Cloud API Gateway
-- 🔍 Eureka Service Discovery
-- ⚙️ Spring Cloud Config Server
-- 👤 User Management Service
-- 🏃 Activity Tracking Service
-- 🤖 AI Recommendation Service
-- 📨 Kafka Event Streaming
-- 🗄 PostgreSQL for User Data
-- 🍃 MongoDB for Activities & Recommendations
-- 🔄 RESTful APIs
-- 🧩 Distributed Microservices Architecture
+This project demonstrates a modern microservices architecture with secure authentication, asynchronous messaging, and AI-powered fitness recommendations.
 
 ---
 
-# 🏗️ System Architecture
+## 🚀 Features
 
-```text
-                                      ┌──────────────────────┐
-                                      │        Client        │
-                                      │ (Web / Mobile App)   │
-                                      └──────────┬───────────┘
-                                                 │
-                                                 ▼
-                               ┌────────────────────────────────┐
-                               │      Spring Cloud Gateway      │
-                               │  JWT Validation • Routing      │
-                               │  Keycloak User Synchronization │
-                               └───────────────┬────────────────┘
-                                               │
-                    ┌──────────────────────────┼──────────────────────────┐
-                    │                          │                          │
-                    ▼                          ▼                          ▼
-        ┌──────────────────┐      ┌──────────────────┐      ┌──────────────────┐
-        │   User Service   │      │ Activity Service │      │    AI Service    │
-        │                  │      │                  │      │                  │
-        │ User Management  │      │ Activity CRUD    │      │ Recommendations  │
-        │ Validation APIs  │      │ Kafka Producer   │      │ Kafka Consumer   │
-        └────────┬─────────┘      └────────┬─────────┘      └────────┬─────────┘
-                 │                         │                         │
-                 │                         │                         │
-                 ▼                         ▼                         ▼
-         ┌──────────────┐         ┌──────────────┐          ┌──────────────┐
-         │ PostgreSQL   │         │   MongoDB    │          │   MongoDB    │
-         │ User Data    │         │ Activities   │          │Recommendations│
-         └──────────────┘         └──────────────┘          └──────────────┘
-                                            │
-                                            │ Publish Event
-                                            ▼
-                                   ┌──────────────────┐
-                                   │      Kafka       │
-                                   │ Event Streaming  │
-                                   └────────┬─────────┘
-                                            │
-                                            ▼
-                                   ┌──────────────────┐
-                                   │ Google Gemini AI │
-                                   │ Recommendation   │
-                                   └──────────────────┘
+- 🔐 OAuth2 Authentication using Keycloak
+- 👤 User Registration & Login
+- 🏃 Track Fitness Activities
+- 📊 View Activity History
+- 🤖 AI-Based Activity Recommendations
+- 📨 Event-Driven Communication using Kafka
+- 🌐 API Gateway
+- 🔍 Service Discovery using Eureka
+- ⚙️ Centralized Configuration using Config Server
+- 💾 PostgreSQL & MongoDB Integration
 
+---
 
-═══════════════════════════════════════════════════════════════════════════════
+# 🏗️ Architecture
 
-                    Shared Infrastructure (Used by All Services)
-
-        ┌────────────────────┐
-        │  Config Server     │
-        │ Centralized Config │
-        └─────────┬──────────┘
-                  │
-                  ▼
-        ┌────────────────────┐
-        │ Eureka Discovery   │
-        │ Service Registry   │
-        └─────────┬──────────┘
-                  │
-                  ▼
-        ┌────────────────────┐
-        │     Keycloak       │
-        │ OAuth2 / JWT Auth  │
-        └────────────────────┘
 ```
+                    +----------------+
+                    |     React      |
+                    |  Frontend      |
+                    +-------+--------+
+                            |
+                            |
+                    +-------v--------+
+                    |  API Gateway   |
+                    +-------+--------+
+                            |
+          ------------------------------------
+          |                 |                |
+          |                 |                |
++---------v------+ +--------v-------+ +------v------+
+| User Service   | | ActivityService| | AI Service  |
++---------+------+ +--------+-------+ +------+------+
+          |                 |                 |
+          |                 |                 |
+     PostgreSQL         MongoDB          Kafka Consumer
+                              |
+                              |
+                          Kafka Broker
+
+                    +--------------------+
+                    | Config Server      |
+                    +--------------------+
+
+                    +--------------------+
+                    | Eureka Server      |
+                    +--------------------+
+
+                    +--------------------+
+                    | Keycloak Server    |
+                    +--------------------+
+```
+
 ---
 
-# 🛠 Tech Stack
+# 🛠️ Tech Stack
 
 ### Backend
 
 - Java 21
 - Spring Boot
-- Spring Cloud
 - Spring Security
-- Spring WebFlux
+- Spring Cloud Gateway
+- Spring Cloud Config
+- Spring Cloud Eureka
 - Spring Data JPA
 - Spring Data MongoDB
+- Kafka
+- Maven
 
-### Authentication
+### Frontend
 
-- Keycloak
-- OAuth2
-- JWT
+- React
+- Material UI
+- Redux Toolkit
+- Axios
+- React OAuth2 PKCE
 
 ### Databases
 
 - PostgreSQL
 - MongoDB
 
-### Messaging
+### Authentication
 
-- Apache Kafka
+- Keycloak
+- OAuth2
+- OpenID Connect
+- PKCE
 
-### AI
+### DevOps
 
-- Google Gemini API
-
-### Build Tool
-
-- Maven
-
-### Tools
-
-- IntelliJ IDEA
 - Docker
-- Postman
-- Git
-- GitHub
+- Docker Compose
 
 ---
 
-# 📂 Microservices
-
-## Config Server
-
-Responsible for centralized configuration management.
-
-Port
+# 📂 Project Structure
 
 ```
-8888
-```
+fitness-microservices/
 
----
-
-## Eureka Server
-
-Service Discovery Server.
-
-Port
-
-```
-8761
+├── activityservice
+├── userservice
+├── gateway
+├── configserver
+├── eureka
+├── aiservice
+├── fitness-frontend
+└── README.md
 ```
 
 ---
 
-## API Gateway
+# ⚙️ Running the Project
 
-Responsibilities
-
-- JWT Validation
-- Keycloak Authentication
-- User Synchronization
-- Request Routing
-
-Port
-
-```
-8080
-```
-
----
-
-## User Service
-
-Stores user information.
-
-Database
-
-```
-PostgreSQL
-```
-
-Port
-
-```
-8081
-```
-
----
-
-## Activity Service
-
-Stores workout activities.
-
-Database
-
-```
-MongoDB
-```
-
-Communicates using Kafka.
-
----
-
-## AI Service
-
-Generates AI-powered fitness recommendations using Google Gemini.
-
-Stores recommendations in MongoDB.
-
----
-
-# 🗄 Databases
-
-## PostgreSQL
-
-Stores
-
-- Users
-- User Profile
-
----
-
-## MongoDB
-
-Stores
-
-- Activities
-- AI Recommendations
-
----
-
-# 🔄 Request Flow
-
-```
-User
- │
- ▼
-Gateway
- │
- ▼
-Keycloak Authentication
- │
- ▼
-User Validation
- │
- ▼
-Activity Service
- │
- ▼
-Kafka Event
- │
- ▼
-AI Service
- │
- ▼
-Gemini API
- │
- ▼
-Recommendation Stored
-```
-
----
-
-# 📦 Running the Project
-
-Clone the repository
+## Clone Repository
 
 ```bash
 git clone https://github.com/nikhilagrawal-dev/fitness-microservices.git
 ```
 
-Move inside
-
-```bash
+```
 cd fitness-microservices
 ```
 
-Start
+---
+
+## Start Infrastructure
 
 - PostgreSQL
 - MongoDB
 - Kafka
 - Keycloak
 
-Run
+---
 
-- Config Server
-- Eureka Server
-- Gateway
-- User Service
-- Activity Service
-- AI Service
+## Start Services
+
+1. Config Server
+2. Eureka Server
+3. User Service
+4. Activity Service
+5. AI Service
+6. API Gateway
+7. React Frontend
 
 ---
 
-# 📡 API Overview
+# 🔐 Authentication Flow
 
-## User Service
-
-- Register User
-- Validate User
-- Get User
-
----
-
-## Activity Service
-
-- Create Activity
-- Get Activities
+- User clicks Login
+- Redirected to Keycloak
+- OAuth2 Authorization Code + PKCE
+- JWT Access Token issued
+- Token attached to every API request
+- Gateway validates token
+- Services authorize request
 
 ---
 
-## AI Service
+# 📸 Screenshots
 
-- Generate Recommendation
-- Get Recommendations
+### Login
+
+<img width="966" height="549" alt="Screenshot 2026-07-21 at 3 08 09 PM" src="https://github.com/user-attachments/assets/f4894840-d979-4909-8603-72dcd5a0c149" />
+
+
+### Dashboard
+
+<img width="1710" height="672" alt="Screenshot 2026-07-21 at 3 11 14 PM" src="https://github.com/user-attachments/assets/0d36f1dd-4fa5-4e9e-ba0f-f2a796346c40" />
+
+
+
+### AI Recommendations , Improvements
+
+
+<img width="777" height="927" alt="Screenshot 2026-07-21 at 3 11 45 PM" src="https://github.com/user-attachments/assets/ff39b7d7-2773-41d8-961b-377a6ec78886" />
 
 ---
 
-# 📌 Future Improvements
+# Future Improvements
 
-- Docker Compose
+- Dashboard Analytics
+- Charts
+- Calories Graph
+- Weekly Statistics
+- Docker Compose One Click Run
 - Kubernetes Deployment
-- Redis Cache
-- Prometheus Monitoring
-- Grafana Dashboard
-- Circuit Breaker
-- Distributed Tracing
 - CI/CD Pipeline
-- Unit Testing
-- Integration Testing
-
----
-
-# 📚 Learning Outcomes
-
-This project demonstrates
-
-- Spring Boot Microservices
-- Spring Cloud Gateway
-- Eureka Discovery
-- Config Server
-- OAuth2 Authentication
-- JWT Validation
-- Keycloak Integration
-- Kafka Messaging
-- PostgreSQL
-- MongoDB
-- REST APIs
-- AI Integration with Gemini
-- Distributed System Design
+- Unit & Integration Testing
 
 ---
 
@@ -367,10 +205,9 @@ This project demonstrates
 
 **Nikhil Agrawal**
 
-GitHub
+B.Tech CSE (AI & DS)
 
+Ramdeobaba University, Nagpur
+
+GitHub:
 https://github.com/nikhilagrawal-dev
-
----
-
-## ⭐ If you found this project useful, consider giving it a star.
