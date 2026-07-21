@@ -65,7 +65,7 @@ function App() {
             variant="contained"
             color="primary"
             size="large"
-            onClick={logIn}
+            onClick={() => logIn()}
           >
             LOGIN
           </Button>

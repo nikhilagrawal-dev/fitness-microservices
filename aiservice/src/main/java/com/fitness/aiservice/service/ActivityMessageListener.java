@@ -3,7 +3,6 @@ package com.fitness.aiservice.service;
 import com.fitness.aiservice.RecommendationRepository;
 import com.fitness.aiservice.model.Activity;
 import com.fitness.aiservice.model.Recommendation;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -23,12 +22,22 @@ public class ActivityMessageListener {
     )
     public void processActivity(Activity activity) {
 
-        log.info("Received Activity for processing: {}", activity.getUserId());
+        try {
 
-        // This recommendation object is converted from ai response
-        // we call activityAIService method to call generateRecommendation method to generate the recommendation
-        // save that recommendation (data) in database
-        Recommendation recommendation = activityAIService.generateRecommendation(activity);
-        recommendationRepository.save(recommendation);
+            log.info("========== MESSAGE RECEIVED ==========");
+            log.info("Activity: {}", activity);
+
+            Recommendation recommendation =
+                    activityAIService.generateRecommendation(activity);
+
+            recommendationRepository.save(recommendation);
+
+            log.info("Recommendation saved successfully.");
+
+        } catch (Exception e) {
+
+            log.error("Error while processing activity", e);
+
+        }
     }
 }
